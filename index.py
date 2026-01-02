@@ -88,4 +88,5 @@ def save_to_dictionary():
     
     return redirect("/")
 
-app.run(port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
