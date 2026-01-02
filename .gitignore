@@ -1,0 +1,4 @@
+.env
+p_dictionary.txt
+__pycache__/
+*.pyc
