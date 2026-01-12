@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from flask import Flask, request, redirect, session
 import requests
 from datetime import date
+import random
 
 load_dotenv()
 api_key = os.environ['webster_api_key']
@@ -56,7 +57,7 @@ def word_entry():
 
 @app.route('/lookup', methods=["POST"])
 def lookup():
-    word = request.form["word"].lower()
+    word = request.form["word"]
     url = f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={api_key}"
     response = requests.get(url)
     data = response.json()
@@ -75,7 +76,7 @@ def lookup():
 def save_to_dictionary():
     word = session["word"]
     definition = session["definition"]
-    part_of_speech = session["part_of_speech"]  # Added this!
+    part_of_speech = session["part_of_speech"] 
     current_date = date.today()
     
     f = open("p_dictionary.txt", "a")
@@ -84,9 +85,79 @@ def save_to_dictionary():
     
     session.pop("word", None)
     session.pop("definition", None)
-    session.pop("part_of_speech", None)  # Clear this too!
+    session.pop("part_of_speech", None)  
     
     return redirect("/")
+
+@app.route("/study", methods=["GET"])
+def study():
+    words_to_test = []
+    try:
+        f = open("p_dictionary.txt", "r")
+        lines = f.readlines()
+        f.close()
+        
+        print(f"Type of lines: {type(lines)}")  
+        print(f"Total lines in file: {len(lines)}") 
+        
+        for line in lines:
+            print(f"Processing line: {line}")
+            parts = line.strip().split("|")
+            print(f"Parts: {parts}, Length: {len(parts)}")
+            if len(parts) >= 4:
+                word = parts[2]
+                definition = parts[3]
+                part_of_speech = parts[1]
+                words_to_test.append({
+                    'word': word,
+                    'definition': definition,
+                    'part_of_speech': part_of_speech
+                })
+
+            else:
+                print(f"Skipped line - not enough parts")  # Debug
+
+    except FileNotFoundError:
+        pass
+    
+    f = open("study.html", "r")
+    page = f.read()
+    f.close
+
+    page += f"<p>Found {len(words_to_test)} words to study!</p>"
+
+    return page
+    
+
+@app.route("/flashcards", methods=["GET"])
+def flashcard():
+    words_to_test = []
+    try:
+        f = open("p_dictionary.txt", "r")
+        lines = f.readlines()
+        f.close()
+        
+        for line in lines:
+            parts = line.strip().split("|")
+            if len(parts) >= 4:
+                words_to_test.append({
+                    'word': parts[2],
+                    'definition': parts[3],
+                    'part_of_speech': parts[1]
+                })
+    except FileNotFoundError:
+        return "<p>No words saved yet!</p>"
+    
+    random_word = random.choice(words_to_test)
+
+    return f"""
+    <h2>What is the definition of:</h2>
+        <h1>{random_word['word']}</h1>
+        <p><i>{random_word['part_of_speech']}</i></p>
+        <button>See Definition</button>
+        <button>Next Word</button>"""
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
