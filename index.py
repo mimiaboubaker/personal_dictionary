@@ -27,7 +27,8 @@ def word_entry():
             <button type="submit">Save to Dictionary</button>
         </form>"""
     
-    page += "<hr><h2>My Dictionary</h2>"
+    page += "<div class='dictionary-section'>"
+    page += "<hr><h1 class='my-dictionary-heading'>My Dictionary</h1>"
     
     try:
         f = open("p_dictionary.txt", "r")
@@ -42,11 +43,11 @@ def word_entry():
             definition = parts[3]
             
             page += f"""
-            <div>
-                <p>{date_saved}</p>
-                <h2>{word}</h2>
-                <p><i>{part_of_speech}</i></p>
-                <p>{definition}</p>
+            <div class="feed-of-words">
+                <p class="date-saved">{date_saved}</p>
+                <h2 class="word">{word}</h2>
+                <p class="part-of-speech"><i>{part_of_speech}</i></p>
+                <p class="definition">{definition}</p>
                 <hr>
             </div>
             """

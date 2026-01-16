@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Word Entry</title>
+        <link rel="stylesheet" href="/static/css/styles.css">
+    
     </head>
     <body>
-        <nav>
+        <nav class="navigation">
             <ul>
                 <li><a href="/">Feed</a></li>
                 <li><a href="/study">Study</a></li>
             </ul>
         </nav>
-        <p><h1>Personal Dictionary</h1></p>
+        <h1>Personal Dictionary</h1>
         <form method="POST" action="/lookup">
             <p>Enter a word:  <input type="text" name="word"></p>
             <button type="submit">Submit</button>

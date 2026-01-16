@@ -1,0 +1,26 @@
+.navigation {
+    background-color: grey;
+
+}
+
+.navigation ul {
+    display: flex;
+    list-style: none;
+    padding: 0;      
+    gap: 20px;       
+}
+
+a:link {
+    color: white;
+}
+
+.dictionary-section {
+    background-color: skyblue;
+    
+}
+
+
+hr {
+
+}
+
