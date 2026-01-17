@@ -92,72 +92,106 @@ def save_to_dictionary():
 
 @app.route("/study", methods=["GET"])
 def study():
-    words_to_test = []
-    try:
-        f = open("p_dictionary.txt", "r")
-        lines = f.readlines()
-        f.close()
-        
-        print(f"Type of lines: {type(lines)}")  
-        print(f"Total lines in file: {len(lines)}") 
-        
-        for line in lines:
-            print(f"Processing line: {line}")
-            parts = line.strip().split("|")
-            print(f"Parts: {parts}, Length: {len(parts)}")
-            if len(parts) >= 4:
-                word = parts[2]
-                definition = parts[3]
-                part_of_speech = parts[1]
-                words_to_test.append({
-                    'word': word,
-                    'definition': definition,
-                    'part_of_speech': part_of_speech
-                })
-
-            else:
-                print(f"Skipped line - not enough parts")  # Debug
-
-    except FileNotFoundError:
-        pass
+    if not session.get('words_to_test'):
+        words_to_test = []
+        try:
+            f = open("p_dictionary.txt", "r")
+            lines = f.readlines()
+            f.close()
+            
+            print(f"Type of lines: {type(lines)}")  
+            print(f"Total lines in file: {len(lines)}") 
+            
+            for line in lines:
+                print(f"Processing line: {line}")
+                parts = line.strip().split("|")
+                print(f"Parts: {parts}, Length: {len(parts)}")
+                if len(parts) >= 4:
+                    word = parts[2]
+                    definition = parts[3]
+                    part_of_speech = parts[1]
+                    words_to_test.append({
+                        'word': word,
+                        'definition': definition,
+                        'part_of_speech': part_of_speech
+                    })
+                else:
+                    print(f"Skipped line - not enough parts")
+            
+            session["words_to_test"] = words_to_test
+            
+        except FileNotFoundError:
+            pass
+    else:
+        words_to_test = session["words_to_test"]
     
     f = open("study.html", "r")
     page = f.read()
-    f.close
-
+    f.close()
+    
     page += f"<p>Found {len(words_to_test)} words to study!</p>"
-
+    
     return page
     
 
 @app.route("/flashcards", methods=["GET"])
 def flashcard():
-    words_to_test = []
-    try:
-        f = open("p_dictionary.txt", "r")
-        lines = f.readlines()
-        f.close()
+    if not session.get('words_to_test'):
+        words_to_test = []
+        try:
+            f = open("p_dictionary.txt", "r")
+            lines = f.readlines()
+            f.close()
+            
+            for line in lines:
+                parts = line.strip().split("|")
+                if len(parts) >= 4:
+                    words_to_test.append({
+                        'word': parts[2],
+                        'definition': parts[3],
+                        'part_of_speech': parts[1]
+                    })
+        except FileNotFoundError:
+            return "<p>No words saved yet!</p>"
         
-        for line in lines:
-            parts = line.strip().split("|")
-            if len(parts) >= 4:
-                words_to_test.append({
-                    'word': parts[2],
-                    'definition': parts[3],
-                    'part_of_speech': parts[1]
-                })
-    except FileNotFoundError:
-        return "<p>No words saved yet!</p>"
+        session["words_to_test"] = words_to_test
+ 
+    else: 
+        words_to_test = session["words_to_test"]
+
+    if not session.get("current_word"):
+        random_word = random.choice(words_to_test)
+        session["current_word"] = random_word
+        session["show_definition"] = False
+    else:
+        random_word = session["current_word"]     
+
     
-    random_word = random.choice(words_to_test)
+    if not session.get("show_definition"):
+    # State 1: Just show the word
+        return f"""
+            <h2>{random_word['word']}</h2>
+            <p><i>{random_word['part_of_speech']}</i></p>
+            <form method="POST" action="/reveal">
+                <button type="submit">See Definition</button>
+            </form>
+        """
+    else:
+        # State 2: Show word + definition + buttons
+        return f"""
+            <h2>{random_word['word']}</h2>
+            <p><i>{random_word['part_of_speech']}</i></p>
+            <p>{random_word['definition']}</p>
+            <form method="POST" action="/next">
+                <button name="action" value="correct">✓ Mastered</button>
+                <button name="action" value="review">✗ Review Again</button>
+            </form>
+        """
 
-    return f"""
-    <h2>What is the definition of:</h2>
-        <h1>{random_word['word']}</h1>
-        <p><i>{random_word['part_of_speech']}</i></p>
-        <button>See Definition</button>
-        <button>Next Word</button>"""
-
+@app.route("/reveal", methods=["POST"])
+def reveal(): 
+    session["show_definition"] = True
+    return redirect("/flashcards")
 
 
 if __name__ == "__main__":
