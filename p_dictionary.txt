@@ -3,4 +3,4 @@
 2026-01-02|adjective|sanguine|marked by eager hopefulness : confidently optimistic
 2026-01-02|noun|idiosyncratic|a peculiarity of constitution, behavior, or temperament : an individualizing characteristic or quality; broadly : eccentricity
 2026-01-02|adjective|morose|having a sullen and gloomy disposition
-2026-01-02|adjective|Vacuous|emptied of or lacking content
+2026-01-02|adjective|vacuous|emptied of or lacking content

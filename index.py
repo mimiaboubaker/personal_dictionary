@@ -45,10 +45,10 @@ def word_entry():
             page += f"""
             <div class="feed-of-words">
                 <p class="date-saved">{date_saved}</p>
-                <h2 class="word">{word}</h2>
+                <h3 class="word">{word}</h3>
                 <p class="part-of-speech"><i>{part_of_speech}</i></p>
                 <p class="definition">{definition}</p>
-                <hr>
+                
             </div>
             """
     except FileNotFoundError:
@@ -193,6 +193,13 @@ def reveal():
     session["show_definition"] = True
     return redirect("/flashcards")
 
+@app.route('/testing', methods=["GET"])
+def testing(): 
+    f = open("testing.html")
+    page = f.read()
+    f.close()
+
+    return page
 
 if __name__ == "__main__":
     app.run(debug=True)

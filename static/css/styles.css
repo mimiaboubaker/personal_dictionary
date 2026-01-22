@@ -1,26 +1,106 @@
-.navigation {
-    background-color: grey;
-
-}
-
-.navigation ul {
+/* header and navigation */
+header {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     display: flex;
-    list-style: none;
-    padding: 0;      
-    gap: 20px;       
+    justify-content: space-between; 
+}
+nav li a{
+    text-decoration: none;
+}
+nav ul {
+    list-style-type: none;
+    display: flex;
+}
+nav li {
+    margin: 3px; 
+}
+body {
+    background: linear-gradient(135deg, #e0e7ff 0%, #ffffff 50%, #f3e8ff 100%);
+}
+h1 {
+    font-size: 3em;
+    margin: 70px 0px 0px 70px;
+}
+.subtitle {
+    color: grey;
+    font-size: 1rem;
+    margin-left: 70px;
+}
+.search-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 3rem;
+    margin-left: 70px;
+    margin-right: 70px;
+    border: 1px solid #e5e7eb;
+}
+.search-card label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.75rem;
+} 
+.search-form {
+    display: flex;
+    gap: 0.75rem;
+}
+input[type="text"] {
+    flex: 1;
+    padding: 0.5rem 1rem; 
+    border: 1px solid #d1d5db;
+    border-radius: 0.75rem;
+    font-size: 0.875rem; 
+    outline: none;
+    transition: all 0.2s;
+    height: 36px; 
+}
+button[type="submit"] {
+    background: #4f46e5;
+    color: #fff;
+    padding: 0.5rem 2rem;  
+    border-radius: 0.75rem; 
+    border: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+    cursor: pointer;
+    height: 36px;  
+    white-space: nowrap;
+}
+button[type="submit"]:hover {
+    background: #4338ca;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-a:link {
-    color: white;
+
+.my-dictionary-heading {
+    padding-bottom: 50px;
 }
 
-.dictionary-section {
-    background-color: skyblue;
-    
+.feed-of-words {
+    padding-left: 70px; 
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding-left: 2rem;
+    margin-bottom: 3rem;
+    margin-left: 70px;
+    margin-right: 70px;
+    border: 1px solid #e5e7eb;
 }
 
-
-hr {
-
+.date-saved {
+    text-align: right;
+    padding-right: 1rem;
+    padding-top: 1rem;
 }
 
+.word {
+    font-weight: bold;
+    padding-top: 0rem;
+    margin-top: 0rem;
+}
