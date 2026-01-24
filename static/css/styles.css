@@ -19,14 +19,19 @@ nav li {
 body {
     background: linear-gradient(135deg, #e0e7ff 0%, #ffffff 50%, #f3e8ff 100%);
 }
+
 h1 {
     font-size: 3em;
     margin: 70px 0px 0px 70px;
+    font-weight: bold;
 }
+
+
 .subtitle {
     color: grey;
     font-size: 1rem;
-    margin-left: 70px;
+    margin-left: 85px;
+    margin-bottom: 50px;
 }
 .search-card {
     background: white;
@@ -34,8 +39,8 @@ h1 {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     margin-bottom: 3rem;
-    margin-left: 70px;
-    margin-right: 70px;
+    margin-left: 85px;
+    margin-right: 85px;
     border: 1px solid #e5e7eb;
 }
 .search-card label {
@@ -82,14 +87,13 @@ button[type="submit"]:hover {
 }
 
 .feed-of-words {
-    padding-left: 70px; 
     background: white;
     border-radius: 1rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     padding-left: 2rem;
     margin-bottom: 3rem;
-    margin-left: 70px;
-    margin-right: 70px;
+    margin-left: 85px;
+    margin-right: 85px;
     border: 1px solid #e5e7eb;
 }
 
@@ -104,3 +108,25 @@ button[type="submit"]:hover {
     padding-top: 0rem;
     margin-top: 0rem;
 }
+
+.my-dictionary-heading {
+    font-size: 2rem;
+    margin-left: 85px;
+    
+}
+
+.header {
+    margin-left: 85px;
+}
+
+.part-of-speech {
+    background-color: #f3e8ff;
+    padding: 10px;
+    border-radius: 25px;
+    margin-right: 1020px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    
+}
+
+

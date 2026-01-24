@@ -28,7 +28,7 @@ def word_entry():
         </form>"""
     
     page += "<div class='dictionary-section'>"
-    page += "<hr><h1 class='my-dictionary-heading'>My Dictionary</h1>"
+    page += "<h1 class='my-dictionary-heading'>My Dictionary</h1>"
     
     try:
         f = open("p_dictionary.txt", "r")
