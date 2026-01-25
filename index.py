@@ -81,8 +81,8 @@ def save_to_dictionary():
         session.pop("study_list", None)
         
         return redirect("/")
-    else:
-        return redirect("/")
+    else:       
+        return "Error: Must be logged in to save words. <a href='/login'>Log in here</a>" 
 @app.route("/study", methods=["GET"])
 def study():
     if session.get("logged_in") == True: 
