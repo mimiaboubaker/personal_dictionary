@@ -205,13 +205,17 @@ button[type="submit"]:hover {
     display: none;
 }
 
-#repeat_word {
-    display: none;
+.buttons {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  gap: 1rem;              /* space between buttons */
+  justify-content: center;
+  margin-top: 1.5rem;
 }
 
-#remove_word {
-    display: none;
-}
 
 .flashcard {
     
@@ -264,4 +268,11 @@ button[type="submit"]:hover {
   margin-top: 12px;
   font-size: 0.9rem;
   opacity: 0.6;
+}
+
+.flashcard.flipped + .buttons {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition-delay: 0.25s; /* sync with flip */
 }
