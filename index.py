@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, request, redirect, session
+from flask import Flask, request, redirect, session, render_template
 import requests
 from datetime import date
 import random
@@ -13,48 +13,36 @@ app.secret_key = os.environ["sessions_secret_key"]
 
 @app.route("/", methods=["GET"])
 def word_entry():
-    f = open("word_form.html")
-    page = f.read()
-    f.close()
-    
+    # Get current word if it exists
+    current_word = None
     if session.get("word"):
-        word = session["word"]
-        definition = session["definition"]
-        part_of_speech = session.get("part_of_speech", "unknown")
-        page += f"<h2>{word}</h2><p><i>{part_of_speech}</i></p><p>{definition}</p>"
-        page += """
-        <form method="POST" action="/save">
-            <button type="submit">Save to Dictionary</button>
-        </form>"""
+        current_word = {
+            'word': session["word"],
+            'definition': session["definition"],
+            'part_of_speech': session.get("part_of_speech", "unknown")
+        }
     
-    page += "<div class='dictionary-section'>"
-    page += "<h1 class='my-dictionary-heading'>My Dictionary</h1>"
-    
+    # Get all saved dictionary entries
+    entries = []
     try:
-        f = open("p_dictionary.txt", "r")
-        lines = f.readlines()
-        f.close()
+        with open("p_dictionary.txt", "r") as f:
+            lines = f.readlines()
         
         for line in reversed(lines):
             parts = line.strip().split("|")
-            date_saved = parts[0]
-            part_of_speech = parts[1]
-            word = parts[2]
-            definition = parts[3]
-            
-            page += f"""
-            <div class="feed-of-words">
-                <p class="date-saved">{date_saved}</p>
-                <h3 class="word">{word}</h3>
-                <p class="part-of-speech"><i>{part_of_speech}</i></p>
-                <p class="definition">{definition}</p>
-                
-            </div>
-            """
+            if len(parts) >= 4:
+                entries.append({
+                    'date': parts[0],
+                    'part_of_speech': parts[1],
+                    'word': parts[2],
+                    'definition': parts[3]
+                })
     except FileNotFoundError:
-        page += "<p>No words saved yet!</p>"
+        pass
     
-    return page
+    return render_template('word_form.html', 
+                         current_word=current_word,
+                         entries=entries)
 
 @app.route('/lookup', methods=["POST"])
 def lookup():
@@ -80,9 +68,8 @@ def save_to_dictionary():
     part_of_speech = session["part_of_speech"] 
     current_date = date.today()
     
-    f = open("p_dictionary.txt", "a")
-    f.write(f"{current_date}|{part_of_speech}|{word}|{definition}\n")
-    f.close()
+    with open("p_dictionary.txt", "a") as f:
+        f.write(f"{current_date}|{part_of_speech}|{word}|{definition}\n")
     
     session.pop("word", None)
     session.pop("definition", None)
@@ -95,28 +82,17 @@ def study():
     if not session.get('words_to_test'):
         words_to_test = []
         try:
-            f = open("p_dictionary.txt", "r")
-            lines = f.readlines()
-            f.close()
-            
-            print(f"Type of lines: {type(lines)}")  
-            print(f"Total lines in file: {len(lines)}") 
+            with open("p_dictionary.txt", "r") as f:
+                lines = f.readlines()
             
             for line in lines:
-                print(f"Processing line: {line}")
                 parts = line.strip().split("|")
-                print(f"Parts: {parts}, Length: {len(parts)}")
                 if len(parts) >= 4:
-                    word = parts[2]
-                    definition = parts[3]
-                    part_of_speech = parts[1]
                     words_to_test.append({
-                        'word': word,
-                        'definition': definition,
-                        'part_of_speech': part_of_speech
+                        'word': parts[2],
+                        'definition': parts[3],
+                        'part_of_speech': parts[1]
                     })
-                else:
-                    print(f"Skipped line - not enough parts")
             
             session["words_to_test"] = words_to_test
             
@@ -125,23 +101,15 @@ def study():
     else:
         words_to_test = session["words_to_test"]
     
-    f = open("study.html", "r")
-    page = f.read()
-    f.close()
-    
-    page += f"<p>Found {len(words_to_test)} words to study!</p>"
-    
-    return page
-    
+    return render_template('study.html', word_count=len(words_to_test))
 
 @app.route("/flashcards", methods=["GET"])
 def flashcard():
     if not session.get('words_to_test'):
         words_to_test = []
         try:
-            f = open("p_dictionary.txt", "r")
-            lines = f.readlines()
-            f.close()
+            with open("p_dictionary.txt", "r") as f:
+                lines = f.readlines()
             
             for line in lines:
                 parts = line.strip().split("|")
@@ -152,10 +120,9 @@ def flashcard():
                         'part_of_speech': parts[1]
                     })
         except FileNotFoundError:
-            return "<p>No words saved yet!</p>"
+            return render_template('flashcards.html', no_words=True)
         
         session["words_to_test"] = words_to_test
- 
     else: 
         words_to_test = session["words_to_test"]
 
@@ -164,42 +131,29 @@ def flashcard():
         session["current_word"] = random_word
         session["show_definition"] = False
     else:
-        random_word = session["current_word"]     
+        random_word = session["current_word"]
 
-    
-    if not session.get("show_definition"):
-    # State 1: Just show the word
-        return f"""
-            <h2>{random_word['word']}</h2>
-            <p><i>{random_word['part_of_speech']}</i></p>
-            <form method="POST" action="/reveal">
-                <button type="submit">See Definition</button>
-            </form>
-        """
-    else:
-        # State 2: Show word + definition + buttons
-        return f"""
-            <h2>{random_word['word']}</h2>
-            <p><i>{random_word['part_of_speech']}</i></p>
-            <p>{random_word['definition']}</p>
-            <form method="POST" action="/next">
-                <button name="action" value="correct">✓ Mastered</button>
-                <button name="action" value="review">✗ Review Again</button>
-            </form>
-        """
+    return render_template('flashcards.html',
+                         current_word=random_word,
+                         show_definition=session.get("show_definition", False))
 
 @app.route("/reveal", methods=["POST"])
 def reveal(): 
     session["show_definition"] = True
     return redirect("/flashcards")
 
-@app.route('/testing', methods=["GET"])
-def testing(): 
-    f = open("testing.html")
-    page = f.read()
-    f.close()
-
-    return page
+@app.route("/next", methods=["POST"])
+def next_card():
+    action = request.form.get("action")
+    
+    # Handle the action (mastered vs review)
+    # You can add logic here to track progress
+    
+    # Clear current word to get a new one
+    session.pop("current_word", None)
+    session["show_definition"] = False
+    
+    return redirect("/flashcards")
 
 if __name__ == "__main__":
     app.run(debug=True)

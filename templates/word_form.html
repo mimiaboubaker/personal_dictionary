@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="title-section">
+    <h1 class="header">Personal Dictionary</h1>
+    <p class="subtitle">Build your vocabulary, one word at a time</p>
+</div>
+
+<div class="search-card">
+    <label for="word">Enter a word:</label>
+    <form method="POST" action="/lookup" class="search-form"> 
+        <input type="text" name="word" placeholder="Search for a word..." required>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+{% if current_word %}
+<div class="search-card">
+    <h2>{{ current_word.word }}</h2>
+    <p><i>{{ current_word.part_of_speech }}</i></p>
+    <p>{{ current_word.definition }}</p>
+    <form method="POST" action="/save">
+        <button type="submit">Save to Dictionary</button>
+    </form>
+</div>
+{% endif %}
+
+<div class="dictionary-section">
+    <h1 class="my-dictionary-heading">My Dictionary</h1>
+    
+    {% if entries %}
+        {% for entry in entries %}
+        <div class="feed-of-words">
+            <p class="date-saved">{{ entry.date }}</p>
+            <h3 class="word">{{ entry.word }}</h3>
+            <p class="part-of-speech"><i>{{ entry.part_of_speech }}</i></p>
+            <p class="definition">{{ entry.definition }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No words saved yet!</p>
+    {% endif %}
+</div>
+{% endblock %}
