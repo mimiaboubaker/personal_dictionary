@@ -74,6 +74,7 @@ def save_to_dictionary():
     session.pop("word", None)
     session.pop("definition", None)
     session.pop("part_of_speech", None)  
+    session.pop("study_list", None)
     
     return redirect("/")
 

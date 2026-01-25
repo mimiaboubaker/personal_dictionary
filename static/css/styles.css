@@ -212,3 +212,15 @@ button[type="submit"]:hover {
 #remove_word {
     display: none;
 }
+
+.flashcard {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s;
+    text-align: center;
+    justify-content: center;
+}
