@@ -25,23 +25,43 @@
 <!-- If current word exists, show word. else, now carsd to study.  !-->   
 {% if current_word %}
 <div class="flashcard">
-    <h2>{{ current_word.word }}</h2>
-    <p>{{ current_word.part_of_speech }}</p>
-    <button onclick="document.getElementById('definition').style.display='block';document.getElementById('repeat_word').style.display='block'; document.getElementById('remove_word').style.display='block'; this.style.display='none'">
-        Show Definition
-    </button>
-    <p id="definition">{{ current_word.definition }}</p>
+  <div class="flashcard-inner">
+
+    <!-- FRONT -->
+    <div class="flashcard-front">
+      <h2>{{ current_word.word }}</h2>
+      <p>{{ current_word.part_of_speech }}</p>
+      <p class="hint">Click to reveal definition</p>
     </div>
-<div class="buttons">
-    <form method="POST" action="/repeat">
-        <button type="submit" id="repeat_word">Repeat word later</button>
-    </form>
-    <form method="POST" action="/remove">
-        <button type="submit" id="remove_word">Remove from study list</button>
-    </form>
+
+    <!-- BACK -->
+    <div class="flashcard-back">
+      <h2>{{ current_word.word }}</h2>
+      <p>{{ current_word.definition }}</p>
+    </div>
+
+  </div>
 </div>
 
+<div class="buttons">
+  <form method="POST" action="/repeat">
+    <button type="submit" id="repeat_word">Repeat word later</button>
+  </form>
+  <form method="POST" action="/remove">
+    <button type="submit" id="remove_word">Remove from study list</button>
+  </form>
+</div>
 {% endif %}
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const card = document.querySelector('.flashcard');
+    if (card) {
+      card.addEventListener('click', () => {
+        card.classList.toggle('flipped');
+      });
+    }
+  });
+</script>
 <!-- Your study page content here -->
 {% endblock %}
