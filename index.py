@@ -46,7 +46,7 @@ def word_entry():
 
 @app.route('/lookup', methods=["POST"])
 def lookup():
-    word = request.form["word"]
+    word = request.form["word"].strip().lower()
     url = f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={api_key}"
     response = requests.get(url)
     data = response.json()
@@ -79,8 +79,8 @@ def save_to_dictionary():
 
 @app.route("/study", methods=["GET"])
 def study():
-    if not session.get('words_to_test'):
-        words_to_test = []
+    if not session.get('study_list'):
+        study_list = []
         try:
             with open("p_dictionary.txt", "r") as f:
                 lines = f.readlines()
@@ -88,72 +88,51 @@ def study():
             for line in lines:
                 parts = line.strip().split("|")
                 if len(parts) >= 4:
-                    words_to_test.append({
+                    study_list.append({
                         'word': parts[2],
                         'definition': parts[3],
                         'part_of_speech': parts[1]
                     })
             
-            session["words_to_test"] = words_to_test
+            random.shuffle(study_list)
+            session["study_list"] = study_list
             
         except FileNotFoundError:
             pass
     else:
-        words_to_test = session["words_to_test"]
+        study_list = session["study_list"]
     
-    return render_template('study.html', word_count=len(words_to_test))
-
-@app.route("/flashcards", methods=["GET"])
-def flashcard():
-    if not session.get('words_to_test'):
-        words_to_test = []
-        try:
-            with open("p_dictionary.txt", "r") as f:
-                lines = f.readlines()
-            
-            for line in lines:
-                parts = line.strip().split("|")
-                if len(parts) >= 4:
-                    words_to_test.append({
-                        'word': parts[2],
-                        'definition': parts[3],
-                        'part_of_speech': parts[1]
-                    })
-        except FileNotFoundError:
-            return render_template('flashcards.html', no_words=True)
-        
-        session["words_to_test"] = words_to_test
-    else: 
-        words_to_test = session["words_to_test"]
-
-    if not session.get("current_word"):
-        random_word = random.choice(words_to_test)
-        session["current_word"] = random_word
-        session["show_definition"] = False
+    if len(study_list) > 0:
+        current_word = study_list[0]  # ← First card from shuffled list
     else:
-        random_word = session["current_word"]
+        current_word = None 
 
-    return render_template('flashcards.html',
-                         current_word=random_word,
-                         show_definition=session.get("show_definition", False))
+    cards_remaining = len(study_list)
 
-@app.route("/reveal", methods=["POST"])
-def reveal(): 
-    session["show_definition"] = True
-    return redirect("/flashcards")
+    return render_template('study.html', word_count=len(study_list), current_word = current_word, cards_remaining = cards_remaining)
 
-@app.route("/next", methods=["POST"])
-def next_card():
-    action = request.form.get("action")
+@app.route("/repeat", methods=["POST"])
+def repeat():
+    study_list = session["study_list"]
+    current_word = study_list.pop(0)
+
+    # random position 
+    position = random.randint(3, len(study_list))
     
-    # Handle the action (mastered vs review)
-    # You can add logic here to track progress
-    
-    # Clear current word to get a new one
-    session.pop("current_word", None)
-    session["show_definition"] = False
-    
-    return redirect("/flashcards")
+    # insert current_word at random position point
+    study_list.insert(position, current_word)
+
+    # save session/update session and redirect
+    session["study_list"] = study_list
+    return redirect("/study")
+
+
+@app.route("/remove", methods=["POST"])
+def remove():
+    study_list = session["study_list"]
+    current_word = study_list.pop(0)
+    session["study_list"] = study_list
+    return redirect("/study")
 
 if __name__ == "__main__":
     app.run(debug=True)

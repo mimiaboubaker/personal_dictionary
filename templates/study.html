@@ -2,13 +2,41 @@
 
 {% block title %}Study - Personal Dictionary{% endblock %}
 
+
+<!-- Header of page !-->
 {% block content %}
 <div class="title-section">
     <h1>Study Mode</h1>
     <p class="subtitle">Test your vocabulary knowledge.</p>
+
+
+ <!-- If word count exists, show number of words; else show no words/add a word.  !-->   
+{% if word_count %}
     <p class="word-count">You have {{ word_count }} words in your dictionary!</p>
+
+
+{% else %}
+    <p>No words in your dictionary.</p>
+    <a href="/">Add a word!</a>
+
+{% endif %}
 </div>
 
+<!-- If current word exists, show word. else, now carsd to study.  !-->   
+{% if current_word %}
+    <h2>{{ current_word.word }}</h2>
+    <p>{{ current_word.part_of_speech }}</p>
+    <button onclick="document.getElementById('definition').style.display='block';document.getElementById('repeat_word').style.display='block'; document.getElementById('remove_word').style.display='block'; this.style.display='none'">
+        Show Definition
+    </button>
+    <p id="definition">{{ current_word.definition }}</p>
+    <form method="POST" action="/repeat">
+        <button type="submit" id="repeat_word">Repeat word later</button>
+    </form>
+    <form method="POST" action="/remove">
+        <button type="submit" id="remove_word">Remove from study list</button>
+    </form>
+{% endif %}
 
 <!-- Your study page content here -->
 {% endblock %}

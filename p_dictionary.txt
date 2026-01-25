@@ -4,3 +4,54 @@
 2026-01-02|noun|idiosyncratic|a peculiarity of constitution, behavior, or temperament : an individualizing characteristic or quality; broadly : eccentricity
 2026-01-02|adjective|morose|having a sullen and gloomy disposition
 2026-01-02|adjective|vacuous|emptied of or lacking content
+2026-01-24|adjective|internecine|of, relating to, or involving conflict within a group
+2026-01-24|adjective|gallant|showy in dress or bearing : smart
+2026-01-24|adjective|oracular|resembling an oracle (as in solemnity of delivery)
+2026-01-24|adjective|sardonic|showing disrespect or scorn for someone or something : disdainfully or skeptically humorous : derisively mocking
+2026-01-24|verb|deracination|uproot
+2026-01-24|noun|comity|friendly social atmosphere : social harmony
+2026-01-24|adjective|bucolic|of or relating to shepherds or herdsmen : pastoral
+2026-01-24|adjective|sardonically|showing disrespect or scorn for someone or something : disdainfully or skeptically humorous : derisively mocking
+2026-01-24|adjective|fallacious|embodying a fallacy
+2026-01-24|noun|valediction|an act of bidding farewell
+2026-01-24|noun|dotage|a state or period of old age especially when accompanied by mental decline
+2026-01-24|adjective|uncontracted|not shortened or reduced in size : not contracted
+2026-01-24|noun|trenchancy|the quality or state of being trenchant
+2026-01-24|verb|vouchsafed|to grant or furnish often in a gracious or condescending manner
+2026-01-24|adjective|diffident|hesitant in acting or speaking through lack of self-confidence
+2026-01-24|noun|parvenu|one that has recently or suddenly risen to an unaccustomed position of wealth or power and has not yet gained the prestige, dignity, or manner associated with it
+2026-01-24|adjective|epochal|of or relating to an epoch
+2026-01-24|noun|epoch|an event or a time marked by an event that begins a new period or development
+2026-01-24|noun|auspice|kindly patronage and guidance
+2026-01-24|noun|vise|any of various tools with two jaws for holding work that close usually by a screw, lever, or cam
+2026-01-24|noun|coup de main|a sudden attack in force
+2026-01-24|noun|cleft|a space or opening made by or as if by splitting : fissure
+2026-01-24|adjective|pitiless|devoid of pity : harsh, cruel
+2026-01-24|adjective|crestfallen|very sad and disappointed : dejected
+2026-01-24|verb|festooned|to hang or form festoons on
+2026-01-24|noun|festoon|a decorative chain or strip hanging between two points
+2026-01-24|adjective|assiduous|showing great care, attention, and effort : marked by careful unremitting attention or persistent application
+2026-01-24|adjective|acerbic|sharply or bitingly critical, sarcastic, or ironic in temper, mood, or tone
+2026-01-24|noun|countenance|look, expression
+2026-01-24|noun|miasma|a vaporous exhalation formerly believed to cause disease; also : a heavy vaporous emanation or atmosphere
+2026-01-24|verb|ensconced|shelter, conceal
+2026-01-24|adjective|tawdry|cheap and gaudy in appearance or quality
+2026-01-24|adjective|surreptitious|done, made, or acquired by stealth : clandestine
+2026-01-24|adjective|miscreant|unbelieving, heretical
+2026-01-24|noun|mensch|a person of integrity and honor
+2026-01-24|noun|ill repute|bad reputation
+2026-01-24|adjective|hellacious|exceptionally powerful or violent
+2026-01-24|noun|kismet|a hypothetical force or personified power that determines the course of the future events : fate, destiny
+2026-01-24|adjective|indecorous|not decorous : conflicting with accepted standards of good conduct or good taste
+2026-01-24|verb|demarcate|delimit
+2026-01-24|noun|horse trading|negotiation accompanied by shrewd bargaining and reciprocal concessions
+2026-01-24|adjective|sentient|capable of sensing or feeling : conscious of or responsive to the sensations of seeing, hearing, feeling, tasting, or smelling
+2026-01-24|verb|suffused|to spread over or through in the manner of fluid or light : flush, fill
+2026-01-24|adjective|fortuitous|occurring by chance
+2026-01-24|noun|oafish|a stupid person
+2026-01-24|adjective|assiduously|showing great care, attention, and effort : marked by careful unremitting attention or persistent application
+2026-01-24|adjective|tautological|involving or containing rhetorical tautology : redundant
+2026-01-24|adjective|exogenous|produced by growth from superficial tissue
+2026-01-24|adjective|tacit|expressed or carried on without words or speech
+2026-01-24|noun|elocution|a style of speaking especially in public
+2026-01-24|noun|decrement|a gradual decrease in quality or quantity
