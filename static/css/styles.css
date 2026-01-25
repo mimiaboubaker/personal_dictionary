@@ -211,7 +211,7 @@ button[type="submit"]:hover {
   transform: translateY(-10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   display: flex;
-  gap: 1rem;              /* space between buttons */
+  gap: 1rem;              
   justify-content: center;
   margin-top: 1.5rem;
 }
@@ -275,4 +275,30 @@ button[type="submit"]:hover {
   pointer-events: auto;
   transform: translateY(0);
   transition-delay: 0.25s; /* sync with flip */
+}
+
+
+form[action="/register"] {
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 18px;
+    gap: 10px;
+    
+}
+
+form[action="/register"] div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+}
+
+form[action="/register"] input {
+    height: 50px;
+}
+
+form[action="/register"] button {
+    grid-column: 1 / -1;  
 }

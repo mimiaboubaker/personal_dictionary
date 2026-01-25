@@ -12,8 +12,15 @@
         <div class="logo">My site</div>
         <nav>
             <ul>
-                <li><a href="/">Home</a></li>
+                
+                <li><a href="/">Home</a></li>               
+                {% if session.get("logged_in") %}
                 <li><a href="/study">Study</a></li>
+                <li><a href="/logout">Log Out</a></li>
+                {% else %}
+                <li><a href="/register">Register</a></li>
+                <li><a href="/login">Log In</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
